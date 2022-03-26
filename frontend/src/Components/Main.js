@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import Login from './Login'
+import {Login} from "./Login.js"
 
 export default class Main extends Component {
   render() {

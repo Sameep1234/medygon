@@ -1,4 +1,4 @@
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.0;
 
 contract medical {
     struct patient {
@@ -22,7 +22,8 @@ contract medical {
     mapping(address => patient) patientInfo;
     mapping(address => doctor) doctorInfo;
     mapping(address => address) Empty;
-
+    mapping (address => string) patientRecords;
+    
     function add_agent(
         string memory _name,
         uint256 _age,
@@ -78,7 +79,9 @@ contract medical {
     }
 
     function permit_access(address addr) public payable {
-        doctorInfo[addr].patientAccessList.push(msg.sender) - 1;
+
+        doctorInfo[addr].patientAccessList.push(msg.sender);
+        uint patientAccessNumber=doctorInfo[addr].patientAccessList.length;
         patientInfo[msg.sender].doctorAccessList.push(addr) - 1;
     }
 

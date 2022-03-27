@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 export const Login = () => {
-  const [currentAccount, setCurrentAccount] = useState("");
+  const [currentAccount, setCurrentAccount] = useState([]);
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -17,9 +17,13 @@ export const Login = () => {
       const accounts = await ethereum.request({ method: "eth_accounts" });
 
       if (accounts.length !== 0) {
-        const account = accounts[0];
-        console.log("Found an authorized account:", account);
-        setCurrentAccount(account);
+        const account = accounts;
+        console.log("ACCOUNT LENGTH: ", accounts.length);
+        console.log("ACCOUNT: ", accounts);
+        account.map((acc) => {
+          console.log("Found an authorized account:", acc);
+          setCurrentAccount(currentAccount.push(acc));
+        })
       } else {
         console.log("No authorized account found")
       }
@@ -42,7 +46,7 @@ export const Login = () => {
 
       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
-      console.log("Connected", accounts[0]);
+      console.log("Connected", accounts);
       setCurrentAccount(accounts[0]);
     } catch (error) {
       console.log(error)
@@ -51,11 +55,29 @@ export const Login = () => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
-  }, [])
+    // connectWallet();
+  })
 
+  // if(currentAccount)
+  // {
+  //   temp = <div>
+  //     {currentAccount && (
+  //         <button className="waveButton" onClick={connectWallet}>
+  //           Connect Wallet
+  //         </button>
+  //       )}
+  //   </div>
+  // }
+  // else
+  // {
+  //   temp = <button>Register</button>
+  // }
   return (
-   <button>
-     Register
-   </button>
+    <div className="mainContainer">
+      {currentAccount && (
+        <button className="waveButton" onClick={connectWallet}>
+          Connect Wallet
+        </button>)}
+    </div>
   );
 }

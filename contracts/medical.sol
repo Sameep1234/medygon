@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.13;
 
 contract medical {
     struct patient {
@@ -22,8 +22,8 @@ contract medical {
     mapping(address => patient) patientInfo;
     mapping(address => doctor) doctorInfo;
     mapping(address => address) Empty;
-    mapping (address => string) patientRecords;
-    
+    mapping(address => string) patientRecords;
+
     function add_agent(
         string memory _name,
         uint256 _age,
@@ -79,15 +79,13 @@ contract medical {
     }
 
     function permit_access(address addr) public payable {
-
-        doctorInfo[addr].patientAccessList.push(msg.sender);
-        uint patientAccessNumber=doctorInfo[addr].patientAccessList.length;
-        patientInfo[msg.sender].doctorAccessList.push(addr) - 1;
+        doctorInfo[addr].myPatients.push(msg.sender);
+        // uint256 patientAccessNumber = doctorInfo[addr].myPatients.length - 1;
+        patientInfo[msg.sender].myDoctors.push(addr);
+        // uint256 doctorAccessNumber = patientInfo[addr].myDoctors.length - 1;
     }
 
-    function remove_element_in_array(address[] storage Array, address addr)
-        internal
-        returns (uint256)
+    function remove_element_in_array(address[] storage Array, address addr) internal
     {
         bool check = false;
         uint256 del_index = 0;
@@ -97,21 +95,22 @@ contract medical {
                 del_index = i;
             }
         }
+        uint256 len = Array.length;
         if (!check) revert();
         else {
             if (Array.length == 1) {
                 delete Array[del_index];
             } else {
-                Array[del_index] = Array[Array.length - 1];
-                delete Array[Array.length - 1];
+                Array[del_index] = Array[len - 1];
+                delete Array[len - 1];
             }
-            Array.length--;
+            len--;
         }
     }
 
     function remove_patient(address paddr, address daddr) public {
-        remove_element_in_array(doctorInfo[daddr].patientAccessList, paddr);
-        remove_element_in_array(patientInfo[paddr].doctorAccessList, daddr);
+        remove_element_in_array(doctorInfo[daddr].myPatients, paddr);
+        remove_element_in_array(patientInfo[paddr].myDoctors, daddr);
     }
 
     function get_accessed_doctorlist_for_patient(address addr)
@@ -119,7 +118,7 @@ contract medical {
         view
         returns (address[] memory)
     {
-        address[] storage doctoraddr = patientInfo[addr].doctorAccessList;
+        address[] storage doctoraddr = patientInfo[addr].myDoctors;
         return doctoraddr;
     }
 
@@ -128,7 +127,7 @@ contract medical {
         view
         returns (address[] memory)
     {
-        return doctorInfo[addr].patientAccessList;
+        return doctorInfo[addr].myPatients;
     }
 
     function revoke_access(address daddr) public payable {
@@ -144,10 +143,10 @@ contract medical {
     }
 
     function get_hash(address paddr) public view returns (string memory) {
-        return patientInfo[paddr].record;
+        return patientInfo[paddr].reports;
     }
 
     function set_hash(address paddr, string memory _hash) internal {
-        patientInfo[paddr].record = _hash;
+        patientInfo[paddr].reports = _hash;
     }
 }

@@ -13,6 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/shared.css" rel="stylesheet">
     <!-- <script src="js/bundle.js"></script> -->
 
     <!-- Custom CSS -->
@@ -105,7 +106,7 @@
         </nav>
 
         <div class="container">
-            <div class="panel panel-default">
+            <div class="panel gradient-background">
                 <div class="panel-heading">
                     <h3 class="text-center">Personal Information</h3>
                 </div>
@@ -138,16 +139,11 @@
                 </div>
             </div>
             
-            <div class="panel panel-default">
+            <div class="panel gradient-background">
                 <div class="panel-heading">
                     <h3 class="text-center">Share your Medical Record</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="alert alert-info col-sm-8 col-sm-offset-2">
-                            <strong>Info!</strong> The doctor already has access to your records. Revoke access or wait for time duration to end to continue.
-                        </div>
-                    </div>
 
                     
                     <form class="form-horizontal" action="/action_page.php">
@@ -166,16 +162,11 @@
                 </div>
             </div>
             
-            <div class="panel panel-default">
+            <div class="panel gradient-background">
                 <div class="panel-heading">
                     <h3 class="text-center">Current EMR access holders</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="alert alert-danger col-sm-8 col-sm-offset-2">
-                            <strong>Notice!</strong> The access could not be revoked. Please retry or contact admin.
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-sm-offset-1 col-sm-10">
                             <table id="accessDoc" class="table table-hover">

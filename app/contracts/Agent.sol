@@ -1,6 +1,12 @@
 pragma solidity ^0.5.1;
 
 contract Agent {
+
+    struct doctor {
+        string name;
+        uint age;
+        address[] patientAccessList;
+    }
     
     struct patient {
         string name;
@@ -10,21 +16,16 @@ contract Agent {
         string record;
     }
     
-    struct doctor {
-        string name;
-        uint age;
-        address[] patientAccessList;
-    }
-
     uint creditPool;
-
-    address[] public patientList;
-    address[] public doctorList;
 
     mapping (address => patient) patientInfo;
     mapping (address => doctor) doctorInfo;
     mapping (address => address) Empty;
     // might not be necessary
+
+    address[] public doctorList;
+    address[] public patientList;
+
     mapping (address => string) patientRecords;
     
 
@@ -74,32 +75,6 @@ contract Agent {
         doctorInfo[addr].patientAccessList.push(msg.sender)-1;
         patientInfo[msg.sender].doctorAccessList.push(addr)-1;
         
-    }
-
-
-    //must be called by doctor
-    function insurance_claim(address paddr, uint _diagnosis, string memory  _hash) public {
-        bool patientFound = false;
-        for(uint i = 0;i<doctorInfo[msg.sender].patientAccessList.length;i++){
-            if(doctorInfo[msg.sender].patientAccessList[i]==paddr){
-                msg.sender.transfer(0.2 ether);
-                creditPool -= 0.2;
-                patientFound = true;
-                
-            }
-            
-        }
-        if(patientFound==true){
-            set_hash(paddr, _hash);
-            remove_patient(paddr, msg.sender);
-        }else {
-            revert();
-        }
-
-        bool DiagnosisFound = false;
-        for(uint j = 0; j < patientInfo[paddr].diagnosis.length;j++){
-            if(patientInfo[paddr].diagnosis[j] == _diagnosis)DiagnosisFound = true;
-        }
     }
 
     function remove_element_in_array(address[] storage Array, address addr) internal returns(uint)

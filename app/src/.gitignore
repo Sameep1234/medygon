@@ -1,5 +1,5 @@
-app/build
-app/node_modules
+/build
+/node_modules
 /test
 .env
 package-lock.json

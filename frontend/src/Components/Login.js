@@ -55,29 +55,12 @@ export const Login = () => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
-    // connectWallet();
   })
 
-  // if(currentAccount)
-  // {
-  //   temp = <div>
-  //     {currentAccount && (
-  //         <button className="waveButton" onClick={connectWallet}>
-  //           Connect Wallet
-  //         </button>
-  //       )}
-  //   </div>
-  // }
-  // else
-  // {
-  //   temp = <button>Register</button>
-  // }
   return (
     <div className="mainContainer">
       {currentAccount && (
-        <button className="waveButton" onClick={connectWallet}>
-          Connect Wallet
-        </button>)}
+        <button class="btn draw-border" onClick={connectWallet}>Connect Wallet</button>)}
     </div>
   );
 }

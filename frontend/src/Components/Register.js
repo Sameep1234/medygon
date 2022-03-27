@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Web3 from 'web3'
+import abi from '../shared/abi'
+var sha256 = require('js-sha256').sha256;
 
 // Change Contract Name to our contract name
 var medical;
@@ -22,11 +24,16 @@ export default class Register extends Component {
         e.preventDefault();
 
         //send to smart contract
-        medical.methods.add_agent()
+        let hash = sha256(null);
+        medical.methods.add_agent(this.state.name, this.state.age, this.state.type, hash).send()
+            .on('reciept', function () {
+                console.log("Transaction Hash Recieved Successfully!")
+            })
+
+        console.log("Contract Sent")
     }
 
-    handleInputChange(e)
-    {
+    handleInputChange(e) {
         let target = e.target;
         let value = target.value;
         this.setState({
@@ -35,13 +42,22 @@ export default class Register extends Component {
     }
 
     async initializeWeb3() {
-        const contract_abi = null
-        const contract_address = null
+        var Contract = require('web3-eth-contract')
+
+        Contract.setProvider()
+        const contract_abi = abi
+        const contract_address = '0xBc17152E46998E6B1b7615f06442af53e03F82d8'
 
         const web3 = new Web3(window.ethereum);
         await window.ethereum.enable()
 
+        console.log(contract_address);
         medical = web3.eth.Contract(contract_abi, contract_address)
+        console.log("Completed Initialization!");
+    }
+
+    componentDidMount() {
+        this.initializeWeb3();
     }
 
     render() {
@@ -70,7 +86,7 @@ export default class Register extends Component {
                             <label htmlFor="type">
                                 Type
                             </label>
-                            <select required onChange={this.handleInputChange} name='type' id='type' className='auth-input' style={{ height: "20px" }}>
+                            <select required onChange={this.handleInputChange} name='type' id='type' className='auth-input' style={{ height: "35px", borderRadius: "6px", padding: "8px" }}>
                                 <option value='patient'>Patient</option>
                                 <option value='doctor'>Doctor</option>
                             </select>

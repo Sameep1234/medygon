@@ -67,9 +67,9 @@ contract Agent {
     }
 
     function permit_access(address addr) payable public {
-        require(msg.value == 2 ether);
+        require(msg.value == 0.2 ether);
 
-        creditPool += 2;
+        creditPool += 0.2;
         
         doctorInfo[addr].patientAccessList.push(msg.sender)-1;
         patientInfo[msg.sender].doctorAccessList.push(addr)-1;
@@ -82,8 +82,8 @@ contract Agent {
         bool patientFound = false;
         for(uint i = 0;i<doctorInfo[msg.sender].patientAccessList.length;i++){
             if(doctorInfo[msg.sender].patientAccessList[i]==paddr){
-                msg.sender.transfer(2 ether);
-                creditPool -= 2;
+                msg.sender.transfer(0.2 ether);
+                creditPool -= 0.2;
                 patientFound = true;
                 
             }
@@ -144,8 +144,8 @@ contract Agent {
     
     function revoke_access(address daddr) public payable{
         remove_patient(msg.sender,daddr);
-        msg.sender.transfer(2 ether);
-        creditPool -= 2;
+        msg.sender.transfer(0.2 ether);
+        creditPool -= 0.2;
     }
 
     function get_patient_list() public view returns(address[] memory ){

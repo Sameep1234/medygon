@@ -213,6 +213,14 @@
         $("#records").hide();
         $(".alert-info").hide();
         $(".alert-danger").hide();
+        if(window.ethereum) {
+            web3 = new Web3(window.ethereum);
+            ethereum.enable();
+            console.log("flag1");
+        } else {
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            console.log("flag");
+        }
         key = web3.currentProvider.selectedAddress;
         key = key.toLocaleLowerCase();
 
@@ -223,9 +231,15 @@
 
         $("#buyInsurance").hide();
         $("#insuranceInfo").hide();
-        
+    
         // print patient details and insurer details (if exists). If insurer does not exist show the buy insurance panel
-        console.log("Getting Patient Data");
+        // console.log("Getting Patient Data");
+        // await contractInstance.methods.get_patient(key).call().then((res) => {
+        //     console.log(res, "Hello");
+        // });
+    
+        
+
         contractInstance.get_patient.call(key, {gas: 100000}, function(error, result){
             console.log("Patient Data Result:"+result);
             if(!error){

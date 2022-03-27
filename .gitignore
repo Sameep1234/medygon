@@ -1,5 +1,6 @@
-*/build
-*/node_modules
-/test
+app/build/
+app/node_modules/
 .env
-package-lock.json
+.vscode
+.DS_Store
+packag-lock.json

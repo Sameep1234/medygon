@@ -1,3 +1,5 @@
 /build
 /node_modules
 /test
+.env
+package-lock.json

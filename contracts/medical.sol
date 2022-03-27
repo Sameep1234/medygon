@@ -1,4 +1,4 @@
-pragma solidity ^0.5.1;
+pragma solidity ^0.8.13;
 
 contract medical {
     struct patient {
@@ -31,23 +31,20 @@ contract medical {
     ) public returns (string memory) {
         address addr = msg.sender;
 
-        if (_designation == 0) 
-        {
+        if (_designation == 0) {
             patient memory p;
             p.name = _name;
             p.age = _age;
             p.reports = _hash;
             patientInfo[msg.sender] = p;
-            patientList.push(addr)-1;
+            patientList.push(addr);
             return _name;
-        } else if (_designation == 1) 
-        {
+        } else if (_designation == 1) {
             doctorInfo[addr].name = _name;
             doctorInfo[addr].age = _age;
-            doctorList.push(addr) - 1;
+            doctorList.push(addr);
             return _name;
-        } else 
-        {
+        } else {
             revert();
         }
     }
@@ -85,25 +82,25 @@ contract medical {
         patientInfo[msg.sender].doctorAccessList.push(addr) - 1;
     }
 
-    function remove_element_in_array(address[] storage Array, address addr) internal returns(uint)
+    function remove_element_in_array(address[] storage Array, address addr)
+        internal
+        returns (uint256)
     {
         bool check = false;
-        uint del_index = 0;
-        for(uint i = 0; i<Array.length; i++){
-            if(Array[i] == addr){
+        uint256 del_index = 0;
+        for (uint256 i = 0; i < Array.length; i++) {
+            if (Array[i] == addr) {
                 check = true;
                 del_index = i;
             }
         }
-        if(!check) revert();
-        else{
-            if(Array.length == 1){
+        if (!check) revert();
+        else {
+            if (Array.length == 1) {
                 delete Array[del_index];
-            }
-            else {
+            } else {
                 Array[del_index] = Array[Array.length - 1];
                 delete Array[Array.length - 1];
-
             }
             Array.length--;
         }
@@ -113,35 +110,41 @@ contract medical {
         remove_element_in_array(doctorInfo[daddr].patientAccessList, paddr);
         remove_element_in_array(patientInfo[paddr].doctorAccessList, daddr);
     }
-    function get_accessed_doctorlist_for_patient(address addr) public view returns (address[] memory )
-    { 
+
+    function get_accessed_doctorlist_for_patient(address addr)
+        public
+        view
+        returns (address[] memory)
+    {
         address[] storage doctoraddr = patientInfo[addr].doctorAccessList;
         return doctoraddr;
     }
-    function get_accessed_patientlist_for_doctor(address addr) public view returns (address[] memory )
+
+    function get_accessed_patientlist_for_doctor(address addr)
+        public
+        view
+        returns (address[] memory)
     {
         return doctorInfo[addr].patientAccessList;
     }
 
-    
-    function revoke_access(address daddr) public payable{
-        remove_patient(msg.sender,daddr);
+    function revoke_access(address daddr) public payable {
+        remove_patient(msg.sender, daddr);
     }
 
-    function get_patient_list() public view returns(address[] memory ){
+    function get_patient_list() public view returns (address[] memory) {
         return patientList;
     }
 
-    function get_doctor_list() public view returns(address[] memory ){
+    function get_doctor_list() public view returns (address[] memory) {
         return doctorList;
     }
 
-    function get_hash(address paddr) public view returns(string memory ){
+    function get_hash(address paddr) public view returns (string memory) {
         return patientInfo[paddr].record;
     }
 
     function set_hash(address paddr, string memory _hash) internal {
         patientInfo[paddr].record = _hash;
     }
-
 }

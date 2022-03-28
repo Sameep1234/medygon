@@ -67,9 +67,6 @@ Insert gif or link to demo
 ```
 ### Running the DApp
 * Connect Metamask to `localhost:8485`
-```bash
-  cd app
-```
 
 Install dependencies
 

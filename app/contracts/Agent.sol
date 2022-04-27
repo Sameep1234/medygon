@@ -1,4 +1,4 @@
-pragma solidity ^0.5.1;
+pragma solidity ^0.5.0;
 
 contract Agent {
 
@@ -16,7 +16,7 @@ contract Agent {
         string record;
     }
     
-    uint creditPool;
+    int creditPool;
 
     mapping (address => patient) patientInfo;
     mapping (address => doctor) doctorInfo;
@@ -68,9 +68,9 @@ contract Agent {
     }
 
     function permit_access(address addr) payable public {
-        require(msg.value == 0.2 ether);
+        require(msg.value == 1 ether/10);
 
-        creditPool += 0.2;
+        // creditPool += 0.2;
         
         doctorInfo[addr].patientAccessList.push(msg.sender)-1;
         patientInfo[msg.sender].doctorAccessList.push(addr)-1;
@@ -119,8 +119,8 @@ contract Agent {
     
     function revoke_access(address daddr) public payable{
         remove_patient(msg.sender,daddr);
-        msg.sender.transfer(0.2 ether);
-        creditPool -= 0.2;
+        msg.sender.transfer(1 ether/10);
+        // creditPool -= 0.2;
     }
 
     function get_patient_list() public view returns(address[] memory ){
@@ -140,4 +140,3 @@ contract Agent {
     }
 
 }
-

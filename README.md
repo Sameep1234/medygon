@@ -103,3 +103,74 @@ Start the server
 - Matic -> 
   - Txn Hash - `0x8de03b46074825f13691b03e7178fd905b5c82ad1f5da52253d4c1363eecbeb7`
   - Contract Address - `0xBc17152E46998E6B1b7615f06442af53e03F82d8`
+
+### Smart Contract Details
+
+❯ truffle migrate --network matic
+⚠️  Important ⚠️
+If you're using an HDWalletProvider, it must be Web3 1.0 enabled or your migration will hang.
+
+
+Starting migrations...
+======================
+> Network name:    'matic'
+> Network id:      80001
+> Block gas limit: 20000000
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0xfc7d53c65cab9096b76d1c44fab3337f4d18db4be01341c2d107adb27694193d
+   > Blocks: 1            Seconds: 8
+   > contract address:    0xb1B94F6213fA3e53F81ceD878f5d5f4cFEfE2526
+   > account:             0x4E4F07Cb512346F10a74ca8AC4aDC0deC318b9d3
+   > balance:             1.35261920312331325
+   > gas used:            245924
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00491848 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 26105930)
+   > confirmation number: 2 (block: 26105931)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00491848 ETH
+
+
+2_deploy_agent.js
+=================
+
+   Deploying 'Agent'
+   -----------------
+   > transaction hash:    0x1801e484f2de99f97806651e3054d450fd77a909a40138abc24130bd904c30ce
+   > Blocks: 0            Seconds: 4
+   > contract address:    0x4f72ba25bb8cb56aa63F5ced1c73A51d57fCCd68
+   > account:             0x4E4F07Cb512346F10a74ca8AC4aDC0deC318b9d3
+   > balance:             1.31605836312331325
+   > gas used:            1782268
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.03564536 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 26105934)
+   > confirmation number: 2 (block: 26105935)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.03564536 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.04056384 ETH

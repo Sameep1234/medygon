@@ -4,3 +4,4 @@ app/node_modules/
 .vscode
 .DS_Store
 packag-lock.json
+app/package-lock.json

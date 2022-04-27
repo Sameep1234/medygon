@@ -5,3 +5,4 @@ app/node_modules/
 .DS_Store
 packag-lock.json
 app/package-lock.json
+node_modules/

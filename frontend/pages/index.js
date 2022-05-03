@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import Web3 from 'web3'
+import web3 from 'web3'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -9,57 +9,20 @@ export default function Home() {
   let [currentAccount, setCurrentAccount] = useState(null);
 
   async function login(provider) {
-    await window.ethereum.request({ method: "eth_requestAccounts" })
-      .then((res) => {
-        console.log(res)
-        setCurrentAccount(res[0])
-        console.log("Metamask account connected: ", currentAccount)
-      })
+    /*  await window.ethereum.request({ method: "eth_requestAccounts" })
+       .then((res) => {
+         console.log(res)
+         setCurrentAccount(res[0])
+         console.log("Metamask account connected: ", currentAccount)
+       })
+ 
+     if (currentAccount != null) {
+       console.log("Metamask account connected: ", currentAccount)
+     } */
 
-    if (currentAccount != null) {
-      console.log("Metamask account connected: ", currentAccount)
-    }
-    /* 
-        const web3 = new Web3(provider)
-        const accounts = web3.eth.getAccounts()
-    
-        if (accounts.length == 0) {
-          console.log("Please connect to MetaMask!");
-        }
-        else if (accounts[0] !== currentAccount) {
-          setCurrentAccount(accounts[0]);
-          console.log("Hash of connected metamask is: ", currentAccount)
-     */
-    /* contractInstance.get_patient_list(function (error, result) { // Backend + Mongo update
-      if (!error) {
-        var PatientList = result;
-        for (var i = 0; i < PatientList.length; i++) {
-          if (publicKey.toLowerCase() == PatientList[i]) {
-            location.href = "./patient.html?key=" + publicKey;
-          }
-        }
-
-      } else {
-        console.log(error);
-        console.log("Invalid Patient!");
-      }
-    });
-
-    contractInstance.get_doctor_list(function (error, result) {
-      if (!error) {
-        var DoctorList = result;
-        for (var i = 0; i < DoctorList.length; i++) {
-          if (publicKey.toLowerCase() == DoctorList[i]) {
-            location.href = "./doctor.html?key=" + publicKey;
-          }
-        }
-
-      } else {
-        console.log(error);
-        console.log("Invalid Doctor!");
-      }
-    }); */
-    // }
+    publicKey = web3.currentProvider.selectedAddress;
+    publicKey = publicKey.toLowerCase();
+     setCurrentAccount(publicKey)
   }
 
   return (

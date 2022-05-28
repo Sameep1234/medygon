@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 
 export default class register extends Component {
   constructor(props) {
@@ -27,9 +26,28 @@ export default class register extends Component {
     })
   }
 
-  componentDidMount()
+  async componentDidMount()
   {
-    /* Connect with metamask to get the public key */
+    if(window.ethereum)
+    {
+      try {
+        const accounts = await window.ethereum.request({
+          method: 'eth_requestAccounts',
+        })
+
+        this.setState({
+          public_hash: accounts[0]
+        })
+      }
+      catch(error)
+      {
+        alert("Error Connecting...")
+      }
+    }
+    else
+    {
+      alert("Please install metamast extention")
+    }
   }
 
   handleSubmit(event)
@@ -42,28 +60,14 @@ export default class register extends Component {
       designation: this.state.designation,
     }
 
-    axios.post("http://localhost:5000/register", data)
-      .then((res) => {
-        if(res.data.success)
-        {
-          this.setState({
-            redirect_var: true,
-          })
-        }
-        else {
-          alert(res.data.msg)
-        }
-      })
-      .catch((err) => {
-        alert("Something wen wrong: ", err)
-      })
+    
   }
 
   render() {
     return (
       <div>
         <nav className="navbar navbar-inverse navbar-static-top" role="navigation">
-          <div className="container-fluid">
+          <div className="container">
             {/* Brand and toggle get grouped for better mobile display */}
             <div className="navbar-header">
               <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -127,8 +131,8 @@ export default class register extends Component {
                   <div className="col-sm-8">
                     <select className="form-control" id="designation" name='designation' onChange={this.handleInputChange} required>
                       <option>-- Please Select --</option>
-                      <option value={0}>Patient</option>
-                      <option value={1}>Doctor</option>
+                      <option value={"patient"}>Patient</option>
+                      <option value={'doctor'}>Doctor</option>
                     </select>
                   </div>
                 </div>

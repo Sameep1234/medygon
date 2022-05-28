@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 export default class register extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export default class register extends Component {
       age: -1,
       designation: -1,
       public_hash: '',
+      hospital_name: '',
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -26,10 +28,8 @@ export default class register extends Component {
     })
   }
 
-  async componentDidMount()
-  {
-    if(window.ethereum)
-    {
+  async componentDidMount() {
+    if (window.ethereum) {
       try {
         const accounts = await window.ethereum.request({
           method: 'eth_requestAccounts',
@@ -39,31 +39,44 @@ export default class register extends Component {
           public_hash: accounts[0]
         })
       }
-      catch(error)
-      {
+      catch (error) {
         alert("Error Connecting...")
       }
     }
-    else
-    {
+    else {
       alert("Please install metamast extention")
     }
   }
 
-  handleSubmit(event)
-  {
+  handleSubmit(event) {
     let data = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       age: this.state.age,
       public_hash: this.state.public_hash,
       designation: this.state.designation,
+      hospital_name: this.state.hospital_name,
     }
 
-    
+    axios.post("/api/registerHandler", data)
+      .then((response) => {
+        console.log(JSON.stringify(response))
+      })
+      .catch((error) => {
+        alert("Error in registering... ", JSON.stringify(error))
+      })
   }
 
   render() {
+    let hospital_name_var
+    if (this.state.designation === 'doctor') {
+      hospital_name_var = <div className="form-group">
+        <label className="control-label col-sm-2" htmlFor="age">Hospital Name:</label>
+        <div className="col-sm-8">
+          <input type="text" className="form-control" id="hospital" placeholder="Enter Hospital Name" name="Enter Hospital Name" onChange={this.handleInputChange} required />
+        </div>
+      </div>
+    }
     return (
       <div>
         <nav className="navbar navbar-inverse navbar-static-top" role="navigation">
@@ -136,6 +149,7 @@ export default class register extends Component {
                     </select>
                   </div>
                 </div>
+                {hospital_name_var}
               </form>
               <div className="text-center">
                 <button className="btn draw-border" onClick={this.handleSubmit}>Register</button>

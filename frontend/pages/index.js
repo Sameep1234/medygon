@@ -42,18 +42,18 @@ export default function Home() {
           alert("Error in fetching patient details")
         })
 
-      if (!patient_redirect) {
-        axios.get('/api/doctorHandler')
-          .then((response) => {
-            console.log("Doctor Response: ", JSON.stringify(response.data))
-            if (response.data.data.length != 0) {
-              if (response.data.data.public_hash === currentAccount) {
+      axios.get('/api/doctorHandler')
+        .then((response) => {
+          console.log("Doctor Response: ", JSON.stringify(response.data))
+          if (response.data.data.length != 0) {
+            response.data.data.map((doctor) => {
+              if (doctor.public_hash === currentAccount) {
                 redirectDoctor(true)
               }
-            }
+            })
+          }
 
-          })
-      }
+        })
     }
     else {
       alert("Please install metamask extention")

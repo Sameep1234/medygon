@@ -1,26 +1,22 @@
 import Link from 'next/link'
-import { useState } from 'react'
-import { ethers } from 'ethers'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { NextResponse } from 'next/server'
+import { useRouter } from 'next/router'
 
 export default function Home() {
+  const router = useRouter()
+
   let [currentAccount, setCurrentAccount] = useState(null);
   let [patient_redirect, redirectPatient] = useState(false);
   let [doctor_redirect, redirectDoctor] = useState(false);
 
   async function requestAccount(event) {
     if (window.ethereum) { // Check whether the browser has metamask or not
-      try { // Get account address
-        const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts',
-        })
-        setCurrentAccount(accounts[0])
-        console.log("Connected wallet address is: ", currentAccount)
-      }
-      catch (error) {
-        alert("Error connecting metamask")
-      }
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      })
+      setCurrentAccount(accounts[0])
+      console.log("Connected wallet address is: ", currentAccount)
     }
     else {
       alert("Please install metamask extention")
@@ -34,8 +30,12 @@ export default function Home() {
       axios.get("/api/patientHandler")
         .then((response) => {
           console.log("Patient Response: ", JSON.stringify(response.data))
-          if(response.data.length != 0) {
-            redirectPatient(true)
+          if (response.data.data.length != 0) {
+            response.data.data.map((patient) => {
+              if (patient.public_hash === currentAccount) {
+                redirectPatient(true)
+              }
+            })
           }
         })
         .catch((error) => {
@@ -46,8 +46,10 @@ export default function Home() {
         axios.get('/api/doctorHandler')
           .then((response) => {
             console.log("Doctor Response: ", JSON.stringify(response.data))
-            if (response.data.length != 0) {
-              redirectDoctor(true)
+            if (response.data.data.length != 0) {
+              if (response.data.data.public_hash === currentAccount) {
+                redirectDoctor(true)
+              }
             }
 
           })
@@ -57,6 +59,15 @@ export default function Home() {
       alert("Please install metamask extention")
     }
   }
+
+  useEffect(() => {
+    if (patient_redirect) {
+      router.push("/patient")
+    }
+    else if (doctor_redirect) {
+      router.push("/doctor")
+    }
+  }, [patient_redirect, doctor_redirect])
 
   return (
     <div className="gradient-background mx-40 mt-80">

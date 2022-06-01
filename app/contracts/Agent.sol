@@ -68,7 +68,7 @@ contract Agent {
     }
 
     function permit_access(address addr) payable public {
-        require(msg.value == 1 ether/10);
+        require(msg.value == 1 ether);
 
         // creditPool += 0.2;
         
@@ -119,7 +119,7 @@ contract Agent {
     
     function revoke_access(address daddr) public payable{
         remove_patient(msg.sender,daddr);
-        msg.sender.transfer(1 ether/10);
+        msg.sender.transfer(1 ether);
         // creditPool -= 0.2;
     }
 

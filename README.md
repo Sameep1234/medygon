@@ -174,3 +174,75 @@ Summary
 =======
 > Total deployments:   2
 > Final cost:          0.04056384 ETH
+
+
+## Latest Contract (Apr 27, 7:04 PM)
+
+❯ truffle migrate --network matic
+⚠️  Important ⚠️
+If you're using an HDWalletProvider, it must be Web3 1.0 enabled or your migration will hang.
+
+
+Starting migrations...
+======================
+> Network name:    'matic'
+> Network id:      80001
+> Block gas limit: 20000000
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x927728d4770edbe38651a2279315e7ae2346520c584c006e308656eeaddb3121
+   > Blocks: 0            Seconds: 5
+   > contract address:    0xE595379c3e7851b70cDEF91F030C11f0261C74f2
+   > account:             0x4E4F07Cb512346F10a74ca8AC4aDC0deC318b9d3
+   > balance:             1.31056640312331325
+   > gas used:            245924
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00491848 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 26106486)
+   > confirmation number: 2 (block: 26106487)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00491848 ETH
+
+
+2_deploy_agent.js
+=================
+
+   Deploying 'Agent'
+   -----------------
+   > transaction hash:    0x121695474146de5d260446ae6bca96353d09a9a44f11f47d299856ddfb4908fa
+   > Blocks: 0            Seconds: 4
+   > contract address:    0x74abE38f1E905fe10faFf07BC5CC55bbf5F8cc16
+   > account:             0x4E4F07Cb512346F10a74ca8AC4aDC0deC318b9d3
+   > balance:             1.27400508312331325
+   > gas used:            1782292
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.03564584 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 26106490)
+   > confirmation number: 2 (block: 26106491)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.03564584 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.04056432 ETH

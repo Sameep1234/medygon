@@ -22,7 +22,7 @@ export default function patient() {
                 </tbody></table>
               <div className="text-center">
                 <h5>Your records are stored here: http://localhost:8080/ipfs/<span id="recordsHash" /></h5>
-                <button type="submit" className="btn btn-info btn-lg" onclick="showRecords(this)">View medical records</button>
+                <button type="submit" className="btn btn-info btn-lg">View medical records</button>
               </div>
               <pre id="records" style={{ marginTop: 20 }}>{"\n"}{"                            "}</pre>
             </div>
@@ -45,7 +45,7 @@ export default function patient() {
             </div>
           </form>
           <div className="text-center">
-            <button onclick="giveAccess()" className="btn btn-primary btn-lg">Submit</button>
+            <button className="btn btn-primary btn-lg">Submit</button>
           </div>
         </div>
       </div>
